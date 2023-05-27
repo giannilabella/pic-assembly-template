@@ -9,3 +9,4 @@ Includes targets for:
 - Disassembling: `make dasm`
 - View COD: `make viewcod`
 - Clean output: `make clean`
+- Clean git related files: `make cleangit`
