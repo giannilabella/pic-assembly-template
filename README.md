@@ -1,7 +1,7 @@
 # PIC Assembly Project Template
 Simple template for PIC assembly projects using [gputils](https://gputils.sourceforge.io/)  
 
-Includes a MPLAB code template
+Includes a MPLAB code template for PIC16F877A
 
 ## Makefile
 Includes targets for:
