@@ -1,2 +1,11 @@
-# pic-assembly-template
-Template for PIC assembly project with gputils and makefile
+# PIC Assembly Project Template
+Simple template for PIC assembly projects using [gputils](https://gputils.sourceforge.io/)  
+
+Includes a MPLAB code template
+
+## Makefile
+Includes targets for:
+- Assembling: `make` or `make asm`
+- Disassembling: `make dasm`
+- View COD: `make viewcod`
+- Clean output: `make clean`
