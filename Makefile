@@ -12,6 +12,7 @@ COD_FILE_PATH = $(OUTPUT_DIR:%=./%/$(PROJECT_NAME).cod)
 ASM = gpasm --mpasm-compatible
 DASM = gpdasm -p $(PROCESSOR)
 COD = gpvc -d
+SIM = gpsim
 
 all: $(HEX_FILE_PATH)
 
@@ -30,6 +31,12 @@ $(COD_FILE_PATH): $(HEX_FILE_PATH)
 
 viewcod: $(COD_FILE_PATH)
 	@$(COD) $(COD_FILE_PATH)
+
+sim: $(COD_FILE_PATH)
+	@$(SIM) -i -s $(COD_FILE_PATH)
+
+simgui: $(COD_FILE_PATH)
+	@$(SIM) -s $(COD_FILE_PATH)
 
 .PHONY: clean
 clean:
