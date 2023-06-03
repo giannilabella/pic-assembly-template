@@ -15,6 +15,7 @@ COD = gpvc -d
 SIM = gpsim
 
 all: $(HEX_FILE_PATH)
+asm: $(HEX_FILE_PATH)
 
 $(HEX_FILE_PATH): $(SOURCE_PATH)
 	@mkdir -p $(OUTPUT_DIR:%=./%/)
