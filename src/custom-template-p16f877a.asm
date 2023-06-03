@@ -17,9 +17,9 @@
 
 
 ; *** Variable Definition ***
-w_temp      EQU	0x7D    ; variable used for context saving 
-status_temp	EQU	0x7E    ; variable used for context saving
-pclath_temp	EQU	0x7F    ; variable used for context saving			
+w_temp      EQU	0x7D    ; variables used for context saving 
+status_temp	EQU	0x7E
+pclath_temp	EQU	0x7F			
 
 
 ; *** Reset Config ***
@@ -30,23 +30,33 @@ pclath_temp	EQU	0x7F    ; variable used for context saving
 
 
 ; *** Interrupt Config ***
-	ORG     0x004       ; interrupt vector location
+	ORG     0x004   ; interrupt vector location
 
-	movwf   w_temp      ; save off current W register contents
-	movf	STATUS, w   ; move status register into W register
-	movwf	status_temp ; save off contents of STATUS register
-	movf	PCLATH, w	; move pclath register into w register
-	movwf	pclath_temp ; save off contents of PCLATH register
+    ; Disable global interrupt
+    bcf     INTCON, GIE
 
-    ; isr code can go here or be located as a call subroutine elsewhere
+    ; Save context
+    movwf   w_temp          ; copy W value to a temporary register
+    swapf   STATUS, W       ; swap STATUS nibbles and save value to a temporary register
+    movwf   status_temp
+    swapf   PCLATH, W       ; swap PCLATH nibbles and save value to a temporary register
+    movwf   pclath_temp
 
-	movf	pclath_temp, w  ; retrieve copy of PCLATH register
-	movwf	PCLATH		    ; restore pre-isr PCLATH register contents
-	movf    status_temp, w  ; retrieve copy of STATUS register
-	movwf	STATUS          ; restore pre-isr STATUS register contents
-	swapf   w_temp, f
-	swapf   w_temp, w       ; restore pre-isr W register contents
-	retfie                  ; return from interrupt
+    ; Interrupt Service Routine (ISR) code can go here or be located as a call subroutine elsewhere
+
+    ; Restore context
+    swapf   pclath_temp, W  ; swap original PCLATH value and restore from temporary register
+    movwf   PCLATH
+    swapf   status_temp, W  ; swap original STATUS value and restore from temporary register
+    movwf   STATUS
+    swapf   w_temp, F       ; restore original W value from temporary register
+    swapf   w_temp, W
+
+    ; Enable global interrupt
+    bsf     INTCON, GIE
+
+    ; Return from interrupt
+	retfie
 
 
 ; *** Main Routine ***
