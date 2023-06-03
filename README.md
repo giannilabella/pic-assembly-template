@@ -8,7 +8,7 @@ Includes targets for:
 - Assembling: `make` or `make asm`
 - Disassembling: `make dasm`
 - View COD: `make viewcod`
-- Simulate CLI mode: `make sim`
-- Simulate GUI mode: `make simgui`
+- Simulate CLI mode: `make simcli`
+- Simulate GUI mode: `make sim`
 - Clean output: `make clean`
 - Clean git related files: `make cleangit`
